@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SinglePhase extends StatefulWidget {
@@ -49,7 +50,9 @@ class _SinglePhaseState extends State<SinglePhase> {
                     style: Theme.of(context).textTheme.title,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
+
                       hintText: "e.g 240",
+                      helperText: "Volts",
                       labelText: "Voltage:",
                     ),
                   ),
@@ -64,6 +67,7 @@ class _SinglePhaseState extends State<SinglePhase> {
                     style: Theme.of(context).textTheme.title,
                     decoration: InputDecoration(
                         labelText: "Current:",
+                        helperText: "Amperes",
                         hintText: "e.g 12.4",
                         fillColor: Colors.deepPurple),
                   ),
@@ -83,6 +87,7 @@ class _SinglePhaseState extends State<SinglePhase> {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: "e.g 300",
+                      helperText: "Hours",
                       labelText: "Availability:",
                     ),
                   ),
@@ -97,6 +102,7 @@ class _SinglePhaseState extends State<SinglePhase> {
                     style: Theme.of(context).textTheme.title,
                     decoration: InputDecoration(
                         labelText: "pf:",
+                        helperText: "Factor",
                         hintText: "e.g 0.85",
                         fillColor: Colors.deepPurple),
                   ),
@@ -110,7 +116,8 @@ class _SinglePhaseState extends State<SinglePhase> {
                     keyboardType: TextInputType.number,
                     style: Theme.of(context).textTheme.title,
                     decoration: InputDecoration(
-                        labelText: "Tarrif:",
+                        labelText: "Tariff:",
+                        helperText: "Naira",
                         hintText: "e.g 30.23",
                         fillColor: Colors.deepPurple),
                   ),
@@ -126,9 +133,11 @@ class _SinglePhaseState extends State<SinglePhase> {
                   padding: EdgeInsets.all(10.0),
                   
                   child: TextField(
+                    keyboardType: TextInputType.numberWithOptions(),
                     controller: _monthsController,
                     decoration: InputDecoration(
                       labelText: "Months:",
+                      helperText: "Number",
                       hintText: "e.g 3"
                     ),
                   ),
@@ -181,7 +190,7 @@ class _SinglePhaseState extends State<SinglePhase> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+            padding: const EdgeInsets.only(top: 15.0, left: 8.0, right: 8.0, bottom: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // textBaseline: TextBaseline.ideographic,
@@ -198,7 +207,7 @@ class _SinglePhaseState extends State<SinglePhase> {
                   style: Theme.of(context).textTheme.title,
                 ),
                 Text(
-                  "AMount: " + _amount().toStringAsFixed(2),
+                  "Amount(#): " + _amount().toStringAsFixed(2),
                   textScaleFactor: 1.5,
                   style: Theme.of(context).textTheme.title,
                 ),
@@ -225,15 +234,15 @@ class _SinglePhaseState extends State<SinglePhase> {
 
     if (hasLetter) {
       setState(() {
-        _current = 0.00;
-        _voltage = 0.00;
-        _pf = 0.00;
+        _current = 0;
+        _voltage = 0;
+        _pf = 0;
       });
     } else {
       if (_currentController.text == "" ||
           _currentController == null ||
           _currentController.text == ".") {
-        _current = 0.00;
+        _current = 0;
       } else {
         _current = double.tryParse(_currentController.text);
       }
@@ -265,9 +274,9 @@ class _SinglePhaseState extends State<SinglePhase> {
 
     if (hasLetter) {
       setState(() {
-        power = 0.00;
-        _availability = 0.00;
-        _numberOfMonths = 0.00;
+        power = 0;
+        _availability = 0;
+        _numberOfMonths = 0;
       });
     } else {
       power = _power();
@@ -279,8 +288,8 @@ class _SinglePhaseState extends State<SinglePhase> {
           _monthsController.text == null ||
           _monthsController.text == ".") {
 
-        _numberOfMonths = 0.00;
-        _availability = 0.00;
+        _numberOfMonths = 0;
+        _availability = 0;
       } else {
         _availability = double.parse(_availabilityController.text);
         _numberOfMonths = double.tryParse(_monthsController.text);
@@ -314,22 +323,23 @@ class _SinglePhaseState extends State<SinglePhase> {
       _currentController.text = "";
       _availabilityController.text = "";
       _pfController.text = "";
+      _monthsController.text ="";
     });
   }
 
   bool checkIfNumber() {
     if (_pfController.text
-            .contains(new RegExp(r'[^0123456789.]', caseSensitive: false)) ||
+            .contains(new RegExp(r'[^0123456789.-0-1-2-3-4-5-6-7-8-9]', caseSensitive: false)) ||
         _availabilityController.text
-            .contains(new RegExp(r'[^0123456789.]', caseSensitive: false)) ||
+            .contains(new RegExp(r'[^0123456789.-0-1-2-3-4-5-6-7-8-9]', caseSensitive: false)) ||
         _voltageController.text
-            .contains(new RegExp(r'[^0123456789.]', caseSensitive: false)) ||
+            .contains(new RegExp(r'[^0123456789.-0-1-2-3-4-5-6-7-8-9]', caseSensitive: false)) ||
         _currentController.text
-            .contains(new RegExp(r'[^0123456789.]', caseSensitive: false)) ||
+            .contains(new RegExp(r'[^0123456789.-0-1-2-3-4-5-6-7-8-9]', caseSensitive: false)) ||
         _tariffController.text
-            .contains(new RegExp(r'[^0123456789.]', caseSensitive: false)) ||
+            .contains(new RegExp(r'[^0123456789.-0-1-2-3-4-5-6-7-8-9]', caseSensitive: false)) ||
     _monthsController.text
-        .contains(new RegExp(r'[^0123456789.]', caseSensitive: false))) {
+        .contains(new RegExp(r'[^0123456789.-1-2-3-4-5-6-7-8-9-0]', caseSensitive: false))) {
       setState(() {
         hasLetter = true;
       });
